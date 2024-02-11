@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mariadb:3306
--- Tempo de geração: 11/02/2024 às 05:04
+-- Tempo de geração: 09/02/2024 às 16:57
 -- Versão do servidor: 11.0.3-MariaDB
 -- Versão do PHP: 8.2.8
 
@@ -29,8 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `slide_configs` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `bible_image_background` bigint(20) UNSIGNED DEFAULT NULL,
-  `bible_video_background` bigint(20) UNSIGNED DEFAULT NULL,
+  `bible_background` bigint(20) UNSIGNED DEFAULT NULL,
   `type` varchar(255) DEFAULT NULL,
   `bg_color` varchar(255) DEFAULT NULL,
   `bible_font` bigint(20) UNSIGNED DEFAULT NULL,
@@ -42,8 +41,8 @@ CREATE TABLE `slide_configs` (
 -- Despejando dados para a tabela `slide_configs`
 --
 
-INSERT INTO `slide_configs` (`id`, `bible_image_background`, `bible_video_background`, `type`, `bg_color`, `bible_font`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 'video', 'rgba(0, 0, 0, 0.6)', 1, '2024-02-09 22:10:12', '2024-02-10 14:08:46');
+INSERT INTO `slide_configs` (`id`, `bible_background`, `type`, `bg_color`, `bible_font`, `created_at`, `updated_at`) VALUES
+(1, 6, 'image', 'rgba(0, 0, 0, 0.58)', 1, '2024-02-08 13:04:10', '2024-02-09 01:11:38');
 
 --
 -- Índices para tabelas despejadas
@@ -54,8 +53,7 @@ INSERT INTO `slide_configs` (`id`, `bible_image_background`, `bible_video_backgr
 --
 ALTER TABLE `slide_configs`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `slide_configs_bible_image_background_foreign` (`bible_image_background`),
-  ADD KEY `slide_configs_bible_video_background_foreign` (`bible_video_background`),
+  ADD KEY `slide_configs_bible_background_foreign` (`bible_background`),
   ADD KEY `slide_configs_bible_font_foreign` (`bible_font`);
 
 --
@@ -76,9 +74,8 @@ ALTER TABLE `slide_configs`
 -- Restrições para tabelas `slide_configs`
 --
 ALTER TABLE `slide_configs`
-  ADD CONSTRAINT `slide_configs_bible_font_foreign` FOREIGN KEY (`bible_font`) REFERENCES `font_banks` (`id`),
-  ADD CONSTRAINT `slide_configs_bible_image_background_foreign` FOREIGN KEY (`bible_image_background`) REFERENCES `image_banks` (`id`),
-  ADD CONSTRAINT `slide_configs_bible_video_background_foreign` FOREIGN KEY (`bible_video_background`) REFERENCES `video_banks` (`id`);
+  ADD CONSTRAINT `slide_configs_bible_background_foreign` FOREIGN KEY (`bible_background`) REFERENCES `image_banks` (`id`),
+  ADD CONSTRAINT `slide_configs_bible_font_foreign` FOREIGN KEY (`bible_font`) REFERENCES `font_banks` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
