@@ -1,0 +1,43 @@
+# Copyright VMware, Inc.
+# SPDX-License-Identifier: APACHE-2.0
+
+version: '2.1'
+
+services:
+  mariadb:
+    image: docker.io/bitnami/mariadb:11.0
+    ports:
+      - '3020:3306'
+    environment:
+      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+      - ALLOW_EMPTY_PASSWORD=yes
+      - MARIADB_USER=bn_myapp
+      - MARIADB_DATABASE=bitnami_myapp
+
+  slide:
+    image: docker.io/bitnami/laravel:10
+    ports:
+      - '8020:8000'
+    environment:
+      - DB_HOST=mariadb
+      - DB_PORT=3306
+      - DB_USERNAME=bn_myapp
+      - DB_DATABASE=bitnami_myapp
+      - PHP_UPLOAD_MAX_FILESIZE=20M
+      - PHP_POST_MAX_SIZE=20M
+      - PHP_MEMORY_LIMIT=1G
+    volumes:
+      - './slide:/app'
+    depends_on:
+      - mariadb
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - '8090:80' # Map port 8080 on the host to port 80 in the container
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=mariadb
+      - PMA_PORT=3306
+      - PMA_USER=bn_myapp
+      - UPLOAD_LIMIT=10240K
