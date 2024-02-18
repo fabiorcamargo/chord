@@ -10,4 +10,7 @@ class VideoPreview extends Page
 
     protected static string $view = 'filament.pages.video-preview';
 
+    protected static bool $shouldRegisterNavigation = false;
+
+
 }

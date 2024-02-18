@@ -13,9 +13,7 @@ class ShowSlides extends Page
 
     protected static ?string $navigationIcon = 'heroicon-s-play-circle';
 
-
     protected static string $view = 'filament.pages.show-slides';
-
 
     protected static bool $shouldRegisterNavigation = true;
 
@@ -24,16 +22,5 @@ class ShowSlides extends Page
     protected static ?string $navigationLabel = 'LIVE';
 
     protected static ?int $navigationSort = 2;
-
-
-
-    public function mount()
-    {
-
-        // Dispara a abertura do modal quando o componente for montado
-        $this->dispatch('open-modal');
-
-
-    }
 
 }

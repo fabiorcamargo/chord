@@ -62,7 +62,7 @@ class VerseRelationManager extends RelationManager
                     ->icon('heroicon-m-clipboard')
                     ->requiresConfirmation()
                     ->action(function (Verse $record) {
-                        $record->show_slide();
+                        $record->show_slide('bible', $record->text, $record->id, $record->id);
                     })
             ])
             ->bulkActions([

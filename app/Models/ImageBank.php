@@ -11,6 +11,7 @@ class ImageBank extends Model
     use HasFactory;
 
     protected $fillable = [
+        'name',
         'path',
     ];
 

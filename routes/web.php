@@ -3,6 +3,7 @@
 use App\Filament\Pages\ShowSlides;
 use App\Livewire\SlideShow;
 use App\Models\Verse;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
@@ -28,4 +29,12 @@ Route::get('book', function () {
 })->name('user');
 
 
-Route::get('/', [SlideShow::class, 'render']);
+Route::get('/', function (){
+    return view('welcome');
+});
+
+Route::get('/t', function () {
+    event(new \App\Events\SlideConfigEvent());
+    Redis::set('test:1:key', 'Value');
+    dd('Event Run Successfully.');
+    });

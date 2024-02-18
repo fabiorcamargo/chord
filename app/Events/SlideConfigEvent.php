@@ -10,7 +10,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class NewSlide
+class SlideConfigEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -27,10 +27,8 @@ class NewSlide
      *
      * @return array<int, \Illuminate\Broadcasting\Channel>
      */
-    public function broadcastOn(): array
+    public function broadcastOn()
     {
-        return [
-            new PrivateChannel('channel-name'),
-        ];
+        return new Channel('SlideConfig.updated');
     }
 }

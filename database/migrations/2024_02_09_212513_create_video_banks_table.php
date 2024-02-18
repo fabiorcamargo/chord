@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('image_banks', function (Blueprint $table) {
+        Schema::create('video_banks', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
             $table->string('path');
             $table->timestamps();
         });
@@ -23,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('image_banks');
+        Schema::dropIfExists('video_banks');
     }
 };

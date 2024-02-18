@@ -34,9 +34,10 @@ class VideoBankResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\TextInput::make('name'),
                 FileUpload::make('path')
                     ->moveFiles()
-                    ->maxSize(10000)
+                    ->maxSize(20000)
                     ->columnSpanFull(),
             ]);
     }
@@ -45,7 +46,10 @@ class VideoBankResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('path')
+                    ->label('Arquivo')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

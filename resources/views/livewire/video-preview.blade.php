@@ -1,5 +1,5 @@
 <div>
-    
+
     <video autoplay loop muted class="">
         <source
 
@@ -13,6 +13,9 @@
     <x-filament::button wire:click="SetBackground">
     Definir Plano de Fundo
     </x-filament::button>
+
+    @livewire('Counter')
+    @livewire('AnotherComponent')
 
 </div>
 </div>

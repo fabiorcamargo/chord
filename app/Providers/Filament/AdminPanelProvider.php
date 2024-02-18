@@ -60,6 +60,7 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
-            ->font(FontBank::getAllFonts());
+            //->font(FontBank::getAllFonts())
+            ->databaseNotifications();
     }
 }

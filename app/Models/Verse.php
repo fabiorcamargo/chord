@@ -66,18 +66,21 @@ class Verse extends Model
         ->toJson();
     }
 
-    public function show_slide(){
+    public function show_slide($type, $text, $model, $key){
 
-        $content = [
-            'text' => $this->text,
-            'end' => $this->complete
-        ];
+            $content = [
+                'type' => $type,
+                'key' => $key,
+                'text' => $text,
+                'model' => $model,
+                'end' => $this->complete
+            ];
         //dd(json_encode($slide, true));
         $slide = Slide::first();
         $slide->content = json_encode($content);
         $slide->update();
 
-        return '';
+        return 'Sim';
 
     }
 

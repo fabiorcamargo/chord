@@ -38,8 +38,6 @@ class ViewVerse extends ViewRecord
                     ->schema([
                         TextEntry::make('text')->html()->columns(1)->label(''),
                         TextEntry::make('complete')->label(''),
-
-
                     ])
 
             ]);
