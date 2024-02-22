@@ -26,29 +26,22 @@ class ImageBankResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
-    protected static ?string $navigationGroup = 'Bíblia';
+    protected static ?string $navigationGroup = 'Configurações';
 
     protected static ?string $navigationIcon = 'heroicon-o-photo';
 
-    protected static ?string $navigationParentItem = 'Livros';
+    // protected static ?string $navigationParentItem = 'Configurações';
 
     protected static ?string $navigationLabel = 'Imagens';
 
     protected static ?int $navigationSort = 2;
 
-    public function index()
-    {
-        // Adiciona um botão à barra de navegação superior
-        View::share('navButton', '<a class="button is-primary" href="#">Meu Botão</a>');
-
-        dd('s');
-        return view('filament.resources.my-resource.index');
-    }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
+                Forms\Components\TextInput::make('name'),
                 FileUpload::make('path')
                     ->image()
                     ->imageEditor()

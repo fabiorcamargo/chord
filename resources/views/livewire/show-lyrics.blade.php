@@ -3,6 +3,7 @@
     <div>
         {{-- {{ $this->productInfolist }} --}}
         <div class="overflow-y-auto p-4" style="height: 250px">
+        @isset($record->Lyric->slide)
         @foreach ($record->Lyric->slide as $key => $line)
             <ul
                 class="flex justify-between gap-x-6 my-2 p-4 fi-in-repeatable-item block rounded-xl bg-white shadow-sm ring-1 ring-gray-950/5 dark:bg-white/5 dark:ring-white/10">
@@ -46,6 +47,7 @@
             </li>
             </ul>
         @endforeach
+        @endisset
     </div>
     </div>
 </div>

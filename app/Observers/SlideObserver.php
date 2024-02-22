@@ -2,7 +2,8 @@
 
 namespace App\Observers;
 
-use App\Events\SlideUpdatedEvent;
+use App\Events\SlideEvent;
+use App\Events\VotouEvent;
 use App\Models\Slide;
 
 class SlideObserver
@@ -20,7 +21,10 @@ class SlideObserver
      */
     public function updated(Slide $slide): void
     {
-        SlideUpdatedEvent::class;
+        //VotouEvent::dispatch();
+        event(new SlideEvent($slide));
+        // event('slide-update');
+        // broadcast(new SlideEvent($slide));
     }
 
     /**

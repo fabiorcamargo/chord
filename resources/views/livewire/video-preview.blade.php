@@ -14,8 +14,5 @@
     Definir Plano de Fundo
     </x-filament::button>
 
-    @livewire('Counter')
-    @livewire('AnotherComponent')
-
 </div>
 </div>

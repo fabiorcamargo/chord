@@ -29,6 +29,7 @@ class BookResource extends Resource
 
     protected static ?int $navigationSort = 0;
 
+
     public static function canCreate(): bool
     {
         return false;

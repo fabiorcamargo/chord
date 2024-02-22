@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Filament\Pages\ShowSlides;
 use App\Models\Lyric;
+use App\Models\Verse;
 use Filament\Actions\Action as ActionsAction;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
@@ -41,7 +42,11 @@ class ShowLyrics extends Component implements HasForms, HasInfolists, HasActions
             echo "A posição não existe neste array.";
         }
         $this->key = $key;
+
+        return redirect(request()->header('Referer'));
+
     }
+
 
     public function render()
     {

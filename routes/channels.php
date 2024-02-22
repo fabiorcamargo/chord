@@ -1,6 +1,5 @@
 <?php
 
-use App\Events\SlideConfigEvent;
 use Illuminate\Support\Facades\Broadcast;
 
 /*
@@ -18,7 +17,6 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
 
-Broadcast::channel('SlideConfig.updated', function () {
-    event(new SlideConfigEvent());
-    return true; // Você pode personalizar a lógica de autorização aqui
-});
+// Broadcast::channel('slide', function ($user) {
+//     return true;
+// });

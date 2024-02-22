@@ -40,7 +40,7 @@ class SlideConfigResource extends Resource
         return $form
             ->schema([
                 ColorPicker::make('bg_color')
-                    ->rgba()
+                    ->rgba(),
             ]);
     }
 
@@ -49,7 +49,7 @@ class SlideConfigResource extends Resource
         return $table
             ->columns([
                 ColorColumn::make('bg_color')
-                ->label('Cor Fundo Bíblia')
+                ->label('Cor Fundo'),
             ])
             ->filters([
                 //

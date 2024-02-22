@@ -16,7 +16,10 @@ class LyricRelationManager extends RelationManager
 {
     protected static string $relationship = 'Lyric';
 
-    
+    protected $listeners = ['SlideEvent' => 'teste'];
+    public function teste(){
+        return redirect(request()->header('Referer'));
+    }
 
     public function form(Form $form): Form
     {

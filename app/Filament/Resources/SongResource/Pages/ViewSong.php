@@ -13,9 +13,12 @@ use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Pages\ViewRecord;
 
+
+
 class ViewSong extends ViewRecord
 {
     protected static string $resource = SongResource::class;
+
 
     protected function getHeaderActions(): array
     {

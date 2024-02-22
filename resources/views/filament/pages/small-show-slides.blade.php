@@ -1,5 +1,8 @@
 <x-filament-panels::page>
 
-    @livewire('SmallSlideShow')
+
+
+@livewire('SmallSlideShow')
+
 
 </x-filament-panels::page>

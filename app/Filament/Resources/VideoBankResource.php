@@ -16,15 +16,15 @@ class VideoBankResource extends Resource
 {
     protected static ?string $model = VideoBank::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-video-camera';
 
     protected static ?string $slug = 'bible/video';
 
     protected static ?string $recordTitleAttribute = 'name';
 
-    protected static ?string $navigationGroup = 'Bíblia';
+    protected static ?string $navigationGroup = 'Configurações';
 
-    protected static ?string $navigationParentItem = 'Livros';
+    // protected static ?string $navigationParentItem = 'Livros';
 
     protected static ?string $navigationLabel = 'Vídeos';
 

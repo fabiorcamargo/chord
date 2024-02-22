@@ -14,11 +14,7 @@ class SlideConfig extends Model
     use HasFactory;
 
     protected $fillable = [
-        'bible_image_background',
-        'bible_video_background',
-        'type',
-        'bg_color',
-        'bible_font'
+        'content',
     ];
 
    public function GetImageBackground() : HasOne
@@ -33,6 +29,8 @@ class SlideConfig extends Model
 
    public function GetFont() : HasOne
    {
+
+    dd($this);
         return $this->hasOne(FontBank::class, 'id', 'bible_font');
    }
 

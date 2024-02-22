@@ -13,11 +13,7 @@ return new class extends Migration
     {
         Schema::create('slide_configs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('bible_image_background')->nullable()->constrained('image_banks', 'id');
-            $table->foreignId('bible_video_background')->nullable()->constrained('video_banks', 'id');
-            $table->string('type')->nullable();
-            $table->string('bg_color')->nullable();
-            $table->foreignId('bible_font')->nullable()->constrained('font_banks', 'id');
+            $table->json('content');
             $table->timestamps();
         });
     }

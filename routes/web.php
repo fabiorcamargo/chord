@@ -1,11 +1,7 @@
 <?php
 
-use App\Filament\Pages\ShowSlides;
-use App\Livewire\SlideShow;
-use App\Models\Verse;
-use Illuminate\Support\Facades\Redis;
+use App\Events\VotouEvent;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,23 +14,21 @@ use Illuminate\Support\Facades\Storage;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::view('/', 'welcome');
 
-Route::get('book', function () {
+Route::view('dashboard', 'dashboard')
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
+
+Route::view('profile', 'profile')
+    ->middleware(['auth'])
+    ->name('profile');
+
+Route::view('slideshow', 'slide-show')
+    ->name('slideshow');
+
+Route::view('smallslideshow', 'small-slide-show')
+    ->name('smallslideshow');
 
 
-
-})->name('user');
-
-
-Route::get('/', function (){
-    return view('welcome');
-});
-
-Route::get('/t', function () {
-    event(new \App\Events\SlideConfigEvent());
-    Redis::set('test:1:key', 'Value');
-    dd('Event Run Successfully.');
-    });
+require __DIR__ . '/auth.php';

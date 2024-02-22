@@ -10,6 +10,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Infolist;
+use Filament\Notifications\Notification;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Actions\Action;
@@ -30,6 +31,13 @@ class StatusSwitcher extends Column
 class VerseRelationManager extends RelationManager
 {
     protected static string $relationship = 'verse';
+
+
+    protected $listeners = ['SlideEvent' => 'teste'];
+    public function teste(){
+        return redirect(request()->header('Referer'));
+    }
+
 
     public function table(Table $table): Table
     {
@@ -61,9 +69,14 @@ class VerseRelationManager extends RelationManager
                 Action::make('Apresentar')
                     ->icon('heroicon-m-clipboard')
                     ->requiresConfirmation()
-                    ->action(function (Verse $record) {
+
+                    ->action(function (Verse $record, \Livewire\Component $livewire) {
                         $record->show_slide('bible', $record->text, $record->id, $record->id);
+                        $livewire->dispatch('SlideEvent');
+
                     })
+
+
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

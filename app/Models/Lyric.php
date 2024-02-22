@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Lyric extends Model
 {
@@ -65,19 +66,34 @@ class Lyric extends Model
         return $this->belongsTo(Song::class);
     }
 
+    public function Image(): HasOne
+    {
+        return $this->hasOne(ImageBank::class, 'id', 'image_background_id');
+    }
+
+    public function Video(): HasOne
+    {
+        return $this->hasOne(VideoBank::class, 'id', 'video_background_id');
+    }
+
     public function show_slide($type, $text, $model, $key){
 
-        $content = [
+        $slide = Slide::first();
+        $slide_content = json_decode($slide->content);
 
+        $content = [
             'type' => $type,
             'key' => $key,
             'text' => $text,
+            'model' => $model,
             'end' => null,
-            'model' => $model
-
+            'image_background' => $this->Image->path,
+            'video_background' => $this->Video->path,
+            'text_show' => isset($slide_content->text_show) ? $slide_content->text_show : true,
+            'image_show' => isset($slide_content->image_show) ? $slide_content->image_show : true,
         ];
 
-        $slide = Slide::first();
+
         $slide->content = json_encode($content);
         $slide->update();
 

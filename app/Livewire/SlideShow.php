@@ -16,37 +16,29 @@ class SlideShow extends Component
     public $config;
     public $data;
 
-    //protected $listeners = ['refreshComponent' => 'getSections'];
+    protected $listeners = ['echo:slide,SlideEvent' => 'atualiza'];
 
-    #[On('countUpdated')]
-    public function countUpdated()
-    {
-        Log::info('ProductUpdated event was triggered.');
-        $this->config = null;
-        $this->mount();
-    }
-
-    public function getSections()
-    {
-        Log::info('ProductUpdated event was triggered.');
-
+    public function atualiza(){
+        $slide = Slide::first();
+        $this->slide = json_decode($slide->content);
         $this->config = SlideConfig::first();
-    }
+        $this->config = json_decode($this->config->content);
+        //return redirect(request()->header('Referer'));
 
+
+    }
     public function mount(){
-        $this->data = Slide::first();
-        $this->slide = [
-            'text' => html_entity_decode(json_decode($this->data->content)->text),
-            'end' => html_entity_decode(json_decode($this->data->content)->end)
-        ];
+        $slide = Slide::first();
+        $this->slide = json_decode($slide->content);
+
         $this->config = SlideConfig::first();
+        $this->config = json_decode($this->config->content);
+
+
     }
 
     public function render()
     {
-
-
-
         return view('livewire.slide-show');
     }
 

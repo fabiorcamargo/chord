@@ -25,11 +25,9 @@ class FontBankResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
-    protected static ?string $navigationGroup = 'Bíblia';
+    protected static ?string $navigationGroup = 'Configurações';
 
-    protected static ?string $navigationIcon = 'heroicon-o-tag';
-
-    protected static ?string $navigationParentItem = 'Livros';
+    protected static ?string $navigationIcon = 'gmdi-font-download-o';
 
     protected static ?string $navigationLabel = 'Fontes';
 

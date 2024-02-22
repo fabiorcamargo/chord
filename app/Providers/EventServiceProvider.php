@@ -2,15 +2,14 @@
 
 namespace App\Providers;
 
-use App\Events\SlideConfigEvent;
+use App\Models\Slide;
+use App\Models\SlideConfig;
+use App\Observers\SlideConfigObserver;
+use App\Observers\SlideObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
-use app\Events\SlideUpdatedEvent;
-use App\Listeners\SlideConfigListener;
-use App\Listeners\SlideListener;
-use App\Observers\SlideObserver;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -22,11 +21,8 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
-            SlideConfigEvent::class => [
-                SlideConfigListener::class,
-            ],
-            SlideObserver::class
         ],
+
     ];
 
     /**
@@ -34,7 +30,8 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Slide::observe(SlideObserver::class);
+        SlideConfig::observe(SlideConfigObserver::class);
     }
 
     /**

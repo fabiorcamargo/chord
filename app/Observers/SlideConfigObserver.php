@@ -2,8 +2,7 @@
 
 namespace App\Observers;
 
-use App\Events\SlideConfigEvent;
-use App\Events\SlideUpdatedEvent;
+use App\Events\SlideEvent;
 use App\Models\SlideConfig;
 
 class SlideConfigObserver
@@ -13,7 +12,7 @@ class SlideConfigObserver
      */
     public function created(SlideConfig $slideConfig): void
     {
-
+        //
     }
 
     /**
@@ -21,7 +20,7 @@ class SlideConfigObserver
      */
     public function updated(SlideConfig $slideConfig): void
     {
-        event(new SlideConfigEvent($slideConfig));
+        event(new SlideEvent($slideConfig));
     }
 
     /**

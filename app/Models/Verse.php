@@ -4,11 +4,13 @@ namespace App\Models;
 
 use App\Events\NewSlide;
 use Filament\Actions\Action;
+use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Livewire\Component;
+use Livewire\Livewire;
 
 class Verse extends Model
 {
@@ -51,6 +53,7 @@ class Verse extends Model
     {
         //dd($this->where('chapter', $this->chapter)->where('book', $this->book)->where('version', $this->version)->get());
 
+        //dd($this->book);
         $book = Book::find($this->book);
         $name = $book->name;
 
@@ -60,35 +63,44 @@ class Verse extends Model
     public function getChaptersAttribute()
     {
         return  Verse::where('version', $this->version)
-        ->where('book', $this->book)
-        ->where('chapter', $this->chapter)
-        ->get()
-        ->toJson();
+            ->where('book', $this->book)
+            ->where('chapter', $this->chapter)
+            ->get()
+            ->toJson();
     }
 
-    public function show_slide($type, $text, $model, $key){
-
-            $content = [
-                'type' => $type,
-                'key' => $key,
-                'text' => $text,
-                'model' => $model,
-                'end' => $this->complete
-            ];
-        //dd(json_encode($slide, true));
+    public function show_slide($type, $text, $model, $key)
+    {
+        $config = SlideConfig::first();
+        $config = json_decode($config->content);
         $slide = Slide::first();
+        $slide_content = json_decode($slide->content);
+
+        $content = [
+            'type' => $type,
+            'key' => $key,
+            'text' => $text,
+            'model' => $model,
+            'end' => $this->complete,
+            'image_background' => \App\Models\ImageBank::find($config->image_background)->path,
+            'video_background' =>  \App\Models\VideoBank::find($config->video_background)->path,
+            'text_show' => isset($slide_content->text_show) ? $slide_content->text_show : true,
+            'image_show' => isset($slide_content->image_show) ? $slide_content->image_show : true,
+        ];
+        //dd($content);
+        //dd(json_encode($slide, true));
+
+
         $slide->content = json_encode($content);
         $slide->update();
 
         return 'Sim';
-
     }
 
 
-    public function getVerse(){
+    public function getVerse()
+    {
         $config = Slide::first();
         return $config->id;
     }
-
-
 }

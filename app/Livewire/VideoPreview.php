@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Events\SlideConfigEvent;
+use App\Events\SlideEvent;
 use App\Events\SlideUpdatedEvent;
 use App\Models\SlideConfig;
 use App\Models\VideoBank;
@@ -22,6 +23,7 @@ class VideoPreview extends Component
         $config = new VideoBank();
         $config->set_background($this->video->id);
 
-        event(new SlideConfigEvent());
+        event(new SlideEvent());
+    
     }
 }

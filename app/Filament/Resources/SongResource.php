@@ -6,8 +6,10 @@ use App\Filament\Resources\SongResource\Pages;
 use App\Filament\Resources\SongResource\RelationManagers;
 use App\Filament\Resources\SongResource\RelationManagers\LyricRelationManager;
 use App\Models\Category;
+use App\Models\ImageBank;
 use App\Models\Song;
 use App\Models\Tag;
+use App\Models\VideoBank;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -41,16 +43,17 @@ class SongResource extends Resource
                     ->options(Category::all()->pluck('name', 'id'))
                     ->searchable()
                     ->preload(),
-                Forms\Components\Select::make('image_id')
-                    ->label('Imagem')
-                    ->options(Category::all()->pluck('name', 'id'))
-                    ->searchable()
-                    ->preload(),
-                Forms\Components\Select::make('video_id')
-                    ->label('Vídeo')
-                    ->options(Category::all()->pluck('name', 'id'))
-                    ->searchable()
-                    ->preload(),
+                // Forms\Components\Select::make('image_id')
+                //     ->label('Imagem')
+                //     ->options(ImageBank::all()->pluck('name', 'id'))
+                //     ->searchable()
+                //     ->preload()
+                //     ,
+                // Forms\Components\Select::make('video_id')
+                //     ->label('Vídeo')
+                //     ->options(VideoBank::all()->pluck('name', 'id'))
+                //     ->searchable()
+                //     ->preload(),
             ]);
     }
 
@@ -91,7 +94,7 @@ class SongResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //LyricRelationManager::class
+            LyricRelationManager::class
         ];
     }
 

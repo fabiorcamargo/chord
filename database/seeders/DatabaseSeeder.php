@@ -62,22 +62,50 @@ class DatabaseSeeder extends Seeder
         ]);
 
         \App\Models\SlideConfig::create([
-            'bible_image_background' => 1,
-            'bible_video_background' => 1,
-            'type' => 'image',
-            'bg_color' => 'rgba(0, 0, 0, 0.6)',
-            'bible_font' => '1'
+            'content' => '{
+                "image_background": 1,
+                "video_background": 1,
+                "type": "image",
+                "bg_color": "rgba(0, 0, 0, 0.6)",
+                "font_type": 1,
+                "font_size": 5
+            }'
         ]);
 
         \App\Models\Slide::create([
-
             'content' => '
             {
                 "type": "lyric",
                 "text":"Seja Bem Vindo",
+                "image_background": "01HP2K3HJA43EAXKDNMMK3QJDW.jpg",
+                "image_show": true,
+                "text_show": true,
                 "end":"",
                 "key":"1"
             }'
         ]);
+
+        \App\Models\Category::create([
+            "name" => "Comunhão"
+        ]);
+
+        \App\Models\Song::create([
+            "name" => "Pai de Multidões",
+            "category_id" => 1,
+            "font_id" => null,
+            "image_id" => null,
+            "video_id" => null,
+        ]);
+
+        \App\Models\Lyric::create([
+            "song_id" => 1,
+            "slide" => null,
+            "slidetext" => null,
+            "image_background_id" => 1,
+            "video_background_id" => 1,
+            "background_type" => "image"
+        ]);
+
+        DB::statement('UPDATE verses SET book = book + 1');
     }
 }
