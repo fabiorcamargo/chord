@@ -2,7 +2,9 @@
 
 namespace App\Filament\Resources\SongResource\RelationManagers;
 
+use App\Models\ImageBank;
 use App\Models\Lyric;
+use App\Models\VideoBank;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
@@ -25,11 +27,25 @@ class LyricRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('image_background_id'),
-                Forms\Components\TextInput::make('video_background_id'),
-                Forms\Components\TextInput::make('background_type')
+                Forms\Components\Select::make('image_background_id')
+                ->options(
+                    ImageBank::pluck('name', 'id')->toArray() // Substitua 'name' pelo nome do campo que contém o nome da imagem
+                )
+                ->label('Select Image'),
+                Forms\Components\Select::make('video_background_id')
+                ->options(
+                    VideoBank::pluck('name', 'id')->toArray() // Substitua 'name' pelo nome do campo que contém o nome do vídeo
+                )
+                ->label('Select Video'),
+                Forms\Components\Select::make('background_type')
+                    ->options(
+                        [
+                            'image' => 'Imagem',
+                            'video' => 'Vídeo'
+                        ]
+                    )
                     ->required()
-                    ->maxLength(255),
+                    ,
 
                 Forms\Components\Select::make('Inserir')
                     ->options([

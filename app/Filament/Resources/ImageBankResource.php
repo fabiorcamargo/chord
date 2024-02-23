@@ -55,6 +55,7 @@ class ImageBankResource extends Resource
     {
         return $table
         ->columns([
+            Tables\Columns\TextColumn::make('name'),
             Tables\Columns\ImageColumn::make('path'),
         ])
         ->filters([
