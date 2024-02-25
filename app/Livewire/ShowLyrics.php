@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Filament\Pages\ShowSlides;
 use App\Models\Lyric;
+use App\Models\Slide;
 use App\Models\Verse;
 use Filament\Actions\Action as ActionsAction;
 use Filament\Actions\Concerns\InteractsWithActions;
@@ -31,6 +32,12 @@ class ShowLyrics extends Component implements HasForms, HasInfolists, HasActions
 
     public $record;
     public $key;
+    public $key_a;
+
+    public function atualiza(){
+        $key_a = Slide::first();
+        $this->key_a = json_decode($key_a->content)->key;
+    }
 
     public function ShowSlide($key)
     {
@@ -52,6 +59,8 @@ class ShowLyrics extends Component implements HasForms, HasInfolists, HasActions
 
     public function render()
     {
+        $key_a = Slide::first();
+        $this->key_a = json_decode($key_a->content)->key;
         return view('livewire.show-lyrics');
     }
 }
