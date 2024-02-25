@@ -4,7 +4,10 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\SlideConfigResource\Pages;
 use App\Filament\Resources\SlideConfigResource\RelationManagers;
+use App\Models\FontBank;
+use App\Models\ImageBank;
 use App\Models\SlideConfig;
+use App\Models\VideoBank;
 use Filament\Forms;
 use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Form;
@@ -32,7 +35,7 @@ class SlideConfigResource extends Resource
 
     public static function canCreate(): bool
     {
-       return false;
+        return false;
     }
 
     public static function form(Form $form): Form
@@ -40,7 +43,42 @@ class SlideConfigResource extends Resource
         return $form
             ->schema([
                 ColorPicker::make('content.bg_color')
-                    ->rgba(),
+                    ->rgba()
+                    ->label('Vinheta Fundo'),
+
+                Forms\Components\Select::make('content.type')
+                    ->options([
+                        'image' => 'Imagem',
+                        'video' => 'Vídeo'
+                    ])
+                    ->label('Tipo de Fundo'),
+
+                Forms\Components\Select::make('content.image_background')
+                    ->label('Imagem')
+                    ->options(
+                        ImageBank::pluck('name', 'id')->toArray() // Substitua 'name' pelo nome do campo que contém o nome da imagem
+                    ),
+                Forms\Components\Select::make('content.video_background')
+                    ->label('Vídeo')
+                    ->options(
+                        VideoBank::pluck('name', 'id')->toArray() // Substitua 'name' pelo nome do campo que contém o nome do vídeo
+                    ),
+                Forms\Components\Select::make('content.font_size')
+                    ->options([
+                        '3' => '3',
+                        '4' => '4',
+                        '5' => '5',
+                        '6' => '6',
+                        '7' => '7',
+                        '8' => '8',
+                    ])
+                    ->label('Tamanho da Fonte'),
+
+                Forms\Components\Select::make('content.font_type')
+                    ->label('Fonte')
+                    ->options(
+                        FontBank::pluck('name', 'id')->toArray() // Substitua 'name' pelo nome do campo que contém o nome do vídeo
+                    ),
             ]);
     }
 
@@ -49,7 +87,7 @@ class SlideConfigResource extends Resource
         return $table
             ->columns([
                 ColorColumn::make('content.bg_color')
-                ->label('Cor Fundo'),
+                    ->label('Cor Fundo'),
             ])
             ->filters([
                 //
