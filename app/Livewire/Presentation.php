@@ -83,29 +83,34 @@ class Presentation extends Component
     {
 
         $this->slide = Slide::first();
+
+        //dd($this->slide->content);
         $id = json_decode($this->slide->content)->model;
+
+        //dd($id);
         $type = json_decode($this->slide->content)->type;
 
         $content = json_decode($this->slide->content);
 
-        //dd($content);
+        //dd($content)
+
 
         if ($type == 'lyric') {
             $lyric = Lyric::find($id);
-            //dd(json_decode($lyric)->slide);
+            $this->key = json_decode($this->slide->content)->key;
             if ($this->key < count(json_decode($lyric)->slide)) {
+
                 $this->key++;
                 $this->ShowSlide($type, $lyric, $this->key);
             }
         } else if ($type == 'bible') {
-            $this->key == '' ? $this->key++ : '';
-            $bible = Verse::find($id);
-            //dd($bible->count());
 
+            $bible = Verse::find($id);
+
+            $this->key = json_decode($this->slide->content)->key;
             if ($this->key < $bible->count()) {
                 $this->key++;
                 $bible = Verse::find($this->key);
-                //dd($bible);
                 $this->ShowSlide($type, $bible, $this->key);
             }
         }
@@ -126,20 +131,20 @@ class Presentation extends Component
         if ($type == 'lyric') {
             $lyric = Lyric::find($id);
             //dd(json_decode($lyric)->slide);
+            $this->key = json_decode($this->slide->content)->key;
+
             if ($this->key > 0) {
-                $this->key++;
+                $this->key--;
                 $this->ShowSlide($type, $lyric, $this->key);
             }
         } else if ($type == 'bible') {
             $this->key == '' ? $this->key++ : '';
             $bible = Verse::find($id);
-            //dd($bible->count());
-            //dd($this->key);
+
+            $this->key = json_decode($this->slide->content)->key;
             if ($this->key > 1) {
                 $this->key--;
-                //dd($this->key);
                 $bible = Verse::find($this->key);
-                //dd($bible);
                 $this->ShowSlide($type, $bible, $this->key);
             }
         }

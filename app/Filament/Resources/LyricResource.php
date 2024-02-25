@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\LyricResource\Pages;
 use App\Filament\Resources\LyricResource\RelationManagers;
 use App\Filament\Resources\SongResource\RelationManagers\LyricRelationManager;
+use App\Models\FontBank;
 use App\Models\Lyric;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -33,21 +34,27 @@ class LyricResource extends Resource
                     ->required()
                     ->maxLength(255),
 
-                    Forms\Components\Select::make('Inserir')
+                Forms\Components\Select::make('Inserir')
                     ->options([
                         '1' => 'Frases',
                         '2' => 'Texto'
                     ])
                     ->live(),
 
-                    Forms\Components\Repeater::make('slide')
+                Forms\Components\Select::make('font_bank_id')
+                    ->label('Fonte')
+                    ->options(
+                        FontBank::pluck('name', 'id')->toArray() // Substitua 'name' pelo nome do campo que contém o nome do vídeo
+                    ),
+
+                Forms\Components\Repeater::make('slide')
                     ->schema([
                         Forms\Components\TextInput::make('text')->required(),
                     ])
                     ->columnSpanFull()
                     ->visible(fn (Get $get): bool => $get('Inserir') === '1'),
 
-                    Forms\Components\RichEditor::make('slidetext')
+                Forms\Components\RichEditor::make('slidetext')
                     ->visible(fn (Get $get): bool => $get('Inserir') === '2')
                     ->columnSpanFull(),
 
@@ -92,9 +99,7 @@ class LyricResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-
-        ];
+        return [];
     }
 
     public static function getPages(): array
