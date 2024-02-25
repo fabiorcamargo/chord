@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\SongResource\RelationManagers;
 
+use App\Models\FontBank;
 use App\Models\ImageBank;
 use App\Models\Lyric;
 use App\Models\VideoBank;
@@ -19,7 +20,8 @@ class LyricRelationManager extends RelationManager
     protected static string $relationship = 'Lyric';
 
     protected $listeners = ['SlideEvent' => 'teste'];
-    public function teste(){
+    public function teste()
+    {
         return redirect(request()->header('Referer'));
     }
 
@@ -28,26 +30,34 @@ class LyricRelationManager extends RelationManager
         return $form
             ->schema([
                 Forms\Components\Select::make('image_background_id')
-                ->options(
-                    ImageBank::pluck('name', 'id')->toArray() // Substitua 'name' pelo nome do campo que contém o nome da imagem
-                )
-                ->label('Select Image'),
+                    ->label('Imagem')
+                    ->options(
+                        ImageBank::pluck('name', 'id')->toArray() // Substitua 'name' pelo nome do campo que contém o nome da imagem
+                    )
+                    ->label('Select Image'),
                 Forms\Components\Select::make('video_background_id')
-                ->options(
-                    VideoBank::pluck('name', 'id')->toArray() // Substitua 'name' pelo nome do campo que contém o nome do vídeo
-                )
-                ->label('Select Video'),
+                    ->label('Vídeo')
+                    ->options(
+                        VideoBank::pluck('name', 'id')->toArray() // Substitua 'name' pelo nome do campo que contém o nome do vídeo
+                    )
+                    ->label('Select Video'),
                 Forms\Components\Select::make('background_type')
+                    ->label('Tipo do Fundo')
                     ->options(
                         [
                             'image' => 'Imagem',
                             'video' => 'Vídeo'
                         ]
                     )
-                    ->required()
-                    ,
+                    ->required(),
+                Forms\Components\Select::make('font_bank_id')
+                    ->label('Fonte')
+                    ->options(
+                        FontBank::pluck('name', 'id')->toArray() // Substitua 'name' pelo nome do campo que contém o nome do vídeo
+                    ),
 
                 Forms\Components\Select::make('Inserir')
+                    ->label('Inserir Letra')
                     ->options([
                         '1' => 'Frases',
                         '2' => 'Texto'

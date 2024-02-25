@@ -1,30 +1,66 @@
 <div>
 
+
+    @if($slide->bg_type == 'image')
     <div class="p-4">
         <div style="width:300px; height:200px; background-color:black ">
             <div class="bg-cover bg-center"
                 style="width:300px; height:200px; background-image: url('{{asset('storage/'.$slide->image_background)}}'); {{$slide->image_show == true ? "" : "
                 display: none"}}">
-                <div class="h-full w-full overflow-hidden bg-fixed" style="background-color: {{$config->bg_color}}">
-                    <div class="mx-auto max-w-md">
-                        <div class="flex h-full items-center justify-center">
-                            <div class="container">
-                                <div class="text-white p-4">
-                                    <div style=" {{$slide->text_show == true ? "" : " display: none"}}">
-                                        <h1
-                                            style="font-family: {{App\Models\FontBank::find($config->font_type)->name}}; font-size: 15px; text-align: right;">
-                                            {!! $slide->text !!} </h1>
-                                        <h4
-                                            style="font-family: {{App\Models\FontBank::find($config->font_type)->name}}; font-size: 10px; text-align: right;">
-                                            {!! $slide->end !!} </h4>
-                                    </div>
-                                </div>
+                <div class="h-full w-full overflow-hidden bg-fixed"
+                    style="background-color: {{$config->content['bg_color']}}">
+                    <div class="flex justify-center items-center h-full">
+                        <div class="text-white p-4">
+
+                            <div style="{{$slide->text_show == true ? "" : " display: none"}}">
+                                {{-- <h1 class="ml9">
+                                    <span class="text-wrapper">
+                                        <span class="letters">Coffee mornings</span>
+                                    </span>
+                                </h1> --}}
+                                <h1 class="text-center"
+                                    style="font-family: {{$slide->font_type}}; font-weight: 400; font-size: {{$config->content['font_size']*3}}px;">
+                                    {!! $slide->text !!}</h1> <!-- Adicionando classe text-center -->
+                                <h4 style="font-family: {{$slide->font_type}}; font-size: {{$config->content['font_size']*2}}px; text-align: right;">
+                                    {!! $slide->end !!}</h4>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        @elseif($slide->bg_type == 'video')
+        <div class="p-4 relative">
+            <div style="width:300px; height:200px; background-color:black; position: relative;">
+                <!-- Vídeo de fundo -->
+                <video autoplay loop muted class="bg-cover bg-center absolute top-0 left-0 w-full h-full"
+                    style="{{$slide->image_show == true ? "" : "display: none"}}">
+                    <source src="{{asset('storage/'.$slide->video_background)}}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+
+                <!-- Texto sobre o vídeo -->
+                <div class="h-full w-full overflow-hidden bg-fixed absolute top-0 left-0"
+                    style="background-color: {{$config->content['bg_color']}}">
+                    <div class="flex justify-center items-center h-full">
+                        <div class="text-white p-4">
+
+                            <div style="{{$slide->text_show == true ? "" : " display: none"}}">
+                                <h1 class="text-center"
+                                    style="font-family: {{$slide->font_type}}; font-weight: 400; font-size: {{$config->content['font_size']*3}}px;">
+                                    {!! $slide->text !!}</h1>
+                                <!-- Adicionando classe text-center -->
+                                <h4 style="font-family: {{$slide->font_type}}; font-size: {{$config->content['font_size']*2}}px; text-align: right;">
+                                    {!! $slide->end !!}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        @endif
 
 
 
@@ -45,11 +81,11 @@
 
         <div class="w-full">
             <div id="font-size" class="inline-flex space-x-2 pt-2">
-                @for ($i = 3; $i <= 8; $i++)
-                <button class="p-2 border h-12 border-gray-600 rounded" wire:model="FontSize" wire:click="font_size({{ $i }})" title="Anterior">
+                @for ($i = 3; $i <= 8; $i++) <button class="p-2 border h-12 border-gray-600 rounded"
+                    wire:model="FontSize" wire:click="font_size({{ $i }})" title="Anterior">
                     <x-gmdi-font-download-o class="w-{{$i}}" />
-                </button>
-                @endfor
+                    </button>
+                    @endfor
             </div>
         </div>
     </div>

@@ -18,7 +18,8 @@ class Lyric extends Model
         'image_background_id',
         'video_background_id',
         'background_type',
-        'song_id'
+        'song_id',
+        'font_bank_id'
     ];
 
     protected $casts = [
@@ -76,19 +77,29 @@ class Lyric extends Model
         return $this->hasOne(VideoBank::class, 'id', 'video_background_id');
     }
 
+    public function Font(): HasOne
+    {
+        return $this->hasOne(FontBank::class, 'id', 'font_bank_id');
+    }
+
     public function show_slide($type, $text, $model, $key){
 
         $slide = Slide::first();
         $slide_content = json_decode($slide->content);
-
+        //dd($model);
+        //dd($slide_content);
+        //dd($this->Font);
+        //dd($type, $text, $model, $key);
         $content = [
             'type' => $type,
             'key' => $key,
             'text' => $text,
-            'model' => $model,
+            'model' => $model->id,
             'end' => null,
+            'bg_type' => $model->background_type,
             'image_background' => $this->Image->path,
             'video_background' => $this->Video->path,
+            'font_type' => $this->Font->name,
             'text_show' => isset($slide_content->text_show) ? $slide_content->text_show : true,
             'image_show' => isset($slide_content->image_show) ? $slide_content->image_show : true,
         ];

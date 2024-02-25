@@ -27,29 +27,17 @@ class Presentation extends Component
     public function font_size($size)
     {
         $this->FontSize = $size;
-
         $this->config->font_size = $size;
-
         $slide_config = SlideConfig::first();
         $slide_config->content = json_encode($this->config);
-
         $slide_config->save();
-
     }
-
-
 
     public function render()
     {
         $slide = Slide::first();
         $this->slide = json_decode($slide->content);
-
-        //dd($this->slide->image_background);
         $this->config = SlideConfig::first();
-        //dd($this->config->cont);
-        $this->config = json_decode($this->config->content);
-
-        //dd($this->config);
 
         return view('livewire.presentation');
 
@@ -71,27 +59,21 @@ class Presentation extends Component
 
     public function config(){
         $slide = Slide::first();
-
         $this->slide = json_decode($slide->content);
-
-        //dd($this->slide);
-
-        // $this->slide = [
-        //     'text' => html_entity_decode(json_decode($slide->content)->text),
-        //     'end' => html_entity_decode(json_decode($slide->content)->end)
-        // ];
-
         $this->config = SlideConfig::first();
     }
 
     public function ShowSlide($type, $model, $id)
     {
+        //dd($model);
+
         if ($type == 'bible') {
-            $model->show_slide($type, $model->text, $model->id, $this->key);
+            $model->show_slide($type, $model->text, $model, $this->key);
         } else if ($type == 'lyric') {
             $slide_array = $model->slide;
+            //dd($slide_array);
             if (isset($slide_array[$this->key])) {
-                $model->show_slide($type, $slide_array[$this->key]['text'], $model->id, $this->key);
+                $model->show_slide($type, $slide_array[$this->key]['text'], $model, $this->key);
             } else {
             }
         }
@@ -103,18 +85,28 @@ class Presentation extends Component
         $this->slide = Slide::first();
         $id = json_decode($this->slide->content)->model;
         $type = json_decode($this->slide->content)->type;
+
+        $content = json_decode($this->slide->content);
+
+        //dd($content);
+
         if ($type == 'lyric') {
             $lyric = Lyric::find($id);
+            //dd(json_decode($lyric)->slide);
             if ($this->key < count(json_decode($lyric)->slide)) {
                 $this->key++;
                 $this->ShowSlide($type, $lyric, $this->key);
             }
         } else if ($type == 'bible') {
+            $this->key == '' ? $this->key++ : '';
             $bible = Verse::find($id);
+            //dd($bible->count());
+
             if ($this->key < $bible->count()) {
                 $this->key++;
                 $bible = Verse::find($this->key);
-                $this->ShowSlide($type, $bible, $id);
+                //dd($bible);
+                $this->ShowSlide($type, $bible, $this->key);
             }
         }
 
@@ -126,18 +118,29 @@ class Presentation extends Component
         $this->slide = Slide::first();
         $id = json_decode($this->slide->content)->model;
         $type = json_decode($this->slide->content)->type;
+
+        $content = json_decode($this->slide->content);
+
+        //dd($content);
+
         if ($type == 'lyric') {
             $lyric = Lyric::find($id);
+            //dd(json_decode($lyric)->slide);
             if ($this->key > 0) {
-                $this->key--;
-                $this->ShowSlide($type, $lyric, $id);
+                $this->key++;
+                $this->ShowSlide($type, $lyric, $this->key);
             }
         } else if ($type == 'bible') {
+            $this->key == '' ? $this->key++ : '';
             $bible = Verse::find($id);
+            //dd($bible->count());
+            //dd($this->key);
             if ($this->key > 1) {
                 $this->key--;
+                //dd($this->key);
                 $bible = Verse::find($this->key);
-                $this->ShowSlide($type, $bible, $id);
+                //dd($bible);
+                $this->ShowSlide($type, $bible, $this->key);
             }
         }
     }

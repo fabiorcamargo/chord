@@ -72,28 +72,23 @@ class Verse extends Model
     public function show_slide($type, $text, $model, $key)
     {
         $config = SlideConfig::first();
-        $config = json_decode($config->content);
         $slide = Slide::first();
         $slide_content = json_decode($slide->content);
-
         $content = [
             'type' => $type,
             'key' => $key,
             'text' => $text,
-            'model' => $model,
-            'end' => $this->complete,
-            'image_background' => \App\Models\ImageBank::find($config->image_background)->path,
-            'video_background' =>  \App\Models\VideoBank::find($config->video_background)->path,
+            'model' => $model->id,
+            'end' => $model->complete,
+            'bg_type' => $config->content['type'],
+            'image_background' => \App\Models\ImageBank::find($config->content['image_background'])->path,
+            'video_background' =>  \App\Models\VideoBank::find($config->content['video_background'])->path,
+            'font_type' => \App\Models\FontBank::find($config->content['font_type'])->name,
             'text_show' => isset($slide_content->text_show) ? $slide_content->text_show : true,
             'image_show' => isset($slide_content->image_show) ? $slide_content->image_show : true,
         ];
-        //dd($content);
-        //dd(json_encode($slide, true));
-
-
         $slide->content = json_encode($content);
         $slide->update();
-
         return 'Sim';
     }
 

@@ -34,9 +34,11 @@ class ShowLyrics extends Component implements HasForms, HasInfolists, HasActions
 
     public function ShowSlide($key)
     {
+        //dd($this->record->Lyric);
         $slide_array = $this->record->Lyric->slide;
+
         if(isset($slide_array[$key])) {
-            $this->record->Lyric->show_slide('lyric', $slide_array[$key]['text'], $this->record->Lyric->id, $key);
+            $this->record->Lyric->show_slide('lyric', $slide_array[$key]['text'], $this->record->Lyric, $key);
         } else {
 
             echo "A posição não existe neste array.";

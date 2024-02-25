@@ -71,7 +71,7 @@ class VerseRelationManager extends RelationManager
                     ->requiresConfirmation()
 
                     ->action(function (Verse $record, \Livewire\Component $livewire) {
-                        $record->show_slide('bible', $record->text, $record->id, $record->id);
+                        $record->show_slide('bible', $record->text, $record, $record->id);
                         $livewire->dispatch('SlideEvent');
 
                     })

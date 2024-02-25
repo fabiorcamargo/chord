@@ -17,6 +17,10 @@ class SlideConfig extends Model
         'content',
     ];
 
+    protected $casts = [
+        'content' => 'array',
+    ];
+
    public function GetImageBackground() : HasOne
    {
         return $this->hasOne(ImageBank::class, 'id', 'bible_image_background');

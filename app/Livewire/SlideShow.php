@@ -22,17 +22,20 @@ class SlideShow extends Component
         $slide = Slide::first();
         $this->slide = json_decode($slide->content);
         $this->config = SlideConfig::first();
-        $this->config = json_decode($this->config->content);
-        //return redirect(request()->header('Referer'));
+        //$this->config = json_decode($this->config->content);
+        return redirect(request()->header('Referer'));
 
 
     }
     public function mount(){
         $slide = Slide::first();
+        //dd($slide);
         $this->slide = json_decode($slide->content);
 
         $this->config = SlideConfig::first();
-        $this->config = json_decode($this->config->content);
+
+        //dd($this->config->content);
+        //$this->config = json_decode($this->config->content);
 
 
     }

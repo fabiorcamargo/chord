@@ -1,13 +1,14 @@
 <div>
 
-    @if($config->type == 'image')
+    @if($slide->bg_type == 'image')
+
     <div class="fixed top-0 left-0 w-full h-full flex justify-center items-center z-50">
         <div class="fixed inset-0 h-screen bg-cover bg-center" style="background-color:black ">
             <div class="fixed inset-0 h-screen bg-cover bg-center"
                 style="background-image: url('{{asset('storage/'.$slide->image_background)}}'); {{$slide->image_show == true ? "" : "
                 display: none"}} ">
                 <div class=" fixed inset-0 h-screen bg-cover bg-center"
-                style="background-color: {{$config->bg_color}} ">
+                style="background-color: {{$config->content['bg_color']}} ">
                 <div class="absolute inset-0 flex justify-center items-center">
                     <!-- Adicionando classes absolute, inset-0, flex, justify-center, e items-center -->
                     <div class="container">
@@ -23,10 +24,10 @@
                                     </span>
                                 </h1> --}}
                                 <h1 class="text-center"
-                                    style="font-family: {{App\Models\FontBank::find($config->font_type)->name}}; font-weight: 400; font-size: {{$config->font_size}}rem;">
+                                    style="font-family: {{$slide->font_type}}; font-weight: 400; font-size: {{$config->content['font_size']}}rem;">
                                     {!! $slide->text !!}</h1> <!-- Adicionando classe text-center -->
                                 <h4
-                                    style="font-family: {{App\Models\FontBank::find($config->font_type)->name}}; font-size: 3rem; text-align: right;">
+                                    style="font-family: {{$slide->font_type}}; font-size: 3rem; text-align: right;">
                                     {!! $slide->end !!}</h4>
                             </div>
                         </div>
@@ -38,7 +39,7 @@
 </div>
 
 
-@elseif($config->type == 'video')
+@elseif($slide->bg_type == 'video')
 
 <div class="fixed top-0 left-0 w-full h-full flex justify-center items-center z-50">
     <div class="fixed inset-0 h-screen bg-cover bg-center" style="background-color: black;">
@@ -48,7 +49,7 @@
             Your browser does not support the video tag.
         </video>
 
-        <div class="fixed inset-0 h-screen bg-cover bg-center" style="background-color: {{$config->bg_color}} ">
+        <div class="fixed inset-0 h-screen bg-cover bg-center" style="background-color: {{$config->content['bg_color']}} ">
             <div class="absolute inset-0 flex justify-center items-center">
                 <!-- Adicionando classes absolute, inset-0, flex, justify-center, e items-center -->
                 <div class="container">
@@ -64,9 +65,9 @@
                                 </span>
                             </h1> --}}
                             <h1 class="ml13 text-center"
-                                style="font-family: {{App\Models\FontBank::find($config->font_type)->name}}; font-weight: 400; font-size: {{$config->font_size}}rem;">
+                                style="font-family: {{$slide->font_type}}; font-weight: 400; font-size: {{$config->content['font_size']}}rem;">
                                 {!! $slide->text !!}</h1> <!-- Adicionando classe text-center -->
-                            <h4 style="font-family: {{App\Models\FontBank::find($config->font_type)->name}}; font-size: 3rem; text-align: right;">
+                            <h4 style="font-family: {{$slide->font_type}}; font-size: 3rem; text-align: right;">
                                 {!!$slide->end!!}</h4>
                         </div>
                     </div>
