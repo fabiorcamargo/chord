@@ -33,15 +33,14 @@ class ShowLyrics extends Component implements HasForms, HasInfolists, HasActions
     public $record;
     public $key;
     public $key_a;
+    public $font_size;
 
-    public function atualiza(){
-        $key_a = Slide::first();
-        $this->key_a = json_decode($key_a->content)->key;
-    }
+
 
     public function ShowSlide($key)
     {
         //dd($this->record->Lyric);
+
         $slide_array = $this->record->Lyric->slide;
 
         if(isset($slide_array[$key])) {
@@ -52,7 +51,8 @@ class ShowLyrics extends Component implements HasForms, HasInfolists, HasActions
         }
         $this->key = $key;
 
-        return redirect(request()->header('Referer'));
+        $this->dispatch('slide-send', ['record' => $this->record])->to(Presentation::class);
+        //return redirect(request()->header('Referer'));
 
     }
 
@@ -60,7 +60,20 @@ class ShowLyrics extends Component implements HasForms, HasInfolists, HasActions
     public function render()
     {
         $key_a = Slide::first();
-        $this->key_a = json_decode($key_a->content)->key;
+        $this->key_a = json_decode($key_a->content);
         return view('livewire.show-lyrics');
+    }
+
+    #[On('slide-send')]
+    public function atualiza(){
+        $key_a = Slide::first();
+        $this->key_a = json_decode($key_a->content)->key;
+    }
+
+    #[On('font-change')]
+    public function font($data){
+
+        $this->font_size = $data['font_size'];
+
     }
 }

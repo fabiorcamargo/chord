@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Events\SlideEvent;
+use App\Events\SlideRecharge;
 use App\Listeners\SlideListener;
 use App\Models\Lyric;
 use App\Models\Slide;
@@ -24,14 +25,27 @@ class Presentation extends Component
 
     public $FontSize = 5;
 
+    protected $debug = true;
+
+
     public function font_size($size)
     {
+
+        $this->config->content =
+            [
+                "type" => $this->config->content['type'],
+                "bg_color" => $this->config->content["bg_color"],
+                "font_size" => $size,
+                "font_type" => $this->config->content['font_type'],
+                "image_background" => $this->config->content['image_background'],
+                "video_background" => $this->config->content['video_background']
+            ];
+        $this->config->save();
         $this->FontSize = $size;
-        $this->config->font_size = $size;
-        $slide_config = SlideConfig::first();
-        $slide_config->content = json_encode($this->config);
-        $slide_config->save();
     }
+
+
+
 
     public function render()
     {
@@ -40,24 +54,27 @@ class Presentation extends Component
         $this->config = SlideConfig::first();
 
         return view('livewire.presentation');
-
     }
 
-    public function swichimage(){
+    public function swichimage()
+    {
         $this->slide->image_show == false ? $this->slide->image_show = true : $this->slide->image_show = false;
         $slide = Slide::first();
         $slide->content = json_encode($this->slide);
         $slide->save();
     }
 
-    public function swichtext(){
+    public function swichtext()
+    {
         $this->slide->text_show == false ? $this->slide->text_show = true : $this->slide->text_show = false;
         $slide = Slide::first();
         $slide->content = json_encode($this->slide);
         $slide->save();
     }
 
-    public function config(){
+
+    public function config()
+    {
         $slide = Slide::first();
         $this->slide = json_decode($slide->content);
         $this->config = SlideConfig::first();
@@ -77,6 +94,8 @@ class Presentation extends Component
             } else {
             }
         }
+
+        $this->dispatch('slide-send')->to(ShowLyrics::class);
     }
 
     public function next()
@@ -114,8 +133,6 @@ class Presentation extends Component
                 $this->ShowSlide($type, $bible, $this->key);
             }
         }
-
-
     }
 
     public function back()
@@ -148,5 +165,23 @@ class Presentation extends Component
                 $this->ShowSlide($type, $bible, $this->key);
             }
         }
+    }
+
+    #[On('slide-send')]
+    public function atualiza($data)
+    {
+        if ($data['record']['id'] == $this->slide->model) {
+            $slide = Slide::first();
+            $this->slide = json_decode($slide->content);
+
+            $this->config = SlideConfig::first();
+        } else {
+            return redirect(request()->header('Referer'));
+        }
+
+    }
+
+    public function recharge(){
+        event(new SlideRecharge());
     }
 }

@@ -2,8 +2,7 @@
 
 namespace App\Events;
 
-use App\Livewire\Presentation;
-use App\Models\Slide;
+use App\Models\SlideConfig;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -12,18 +11,17 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class SlideEvent implements ShouldBroadcast
+class SlideConfigEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public Slide $slide;
+    public $slideConfig;
     /**
      * Create a new event instance.
      */
-    public function __construct($slide)
+    public function __construct(SlideConfig $slideConfig)
     {
-        $this->slide = $slide;
-
+        $this->slideConfig = $slideConfig;
     }
 
     /**
@@ -35,7 +33,6 @@ class SlideEvent implements ShouldBroadcast
     {
         return [
             new Channel('slide'),
-
         ];
     }
 }

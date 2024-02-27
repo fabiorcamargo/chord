@@ -68,6 +68,13 @@ class ImageBankResource extends Resource
                 ->requiresConfirmation()
                 ->action(function (ImageBank $record) {
                     $record->set_background($record);
+                }),
+
+                Action::make('Projetar')
+                ->icon('heroicon-m-clipboard')
+                ->requiresConfirmation()
+                ->action(function (ImageBank $record) {
+                    $record->send_show($record);
                 })
         ])
         ->bulkActions([

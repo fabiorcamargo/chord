@@ -14,5 +14,10 @@
     Definir Plano de Fundo
     </x-filament::button>
 
+    
+    <x-filament::button wire:click="send_show">
+    Definir Plano de Fundo
+    </x-filament::button>
+
 </div>
 </div>

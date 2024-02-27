@@ -15,29 +15,51 @@ class SlideShow extends Component
     public $minhaVariavel;
     public $config;
     public $data;
+    public $text;
+    public $end;
+    public $font_size;
 
-    protected $listeners = ['echo:slide,SlideEvent' => 'atualiza'];
-
-    public function atualiza(){
-        $slide = Slide::first();
-        $this->slide = json_decode($slide->content);
-        $this->config = SlideConfig::first();
-        //$this->config = json_decode($this->config->content);
+    #[On('echo:slide,SlideRecharge')]
+    public function recharge(){
         return redirect(request()->header('Referer'));
+    }
 
 
+    #[On('echo:slide,SlideEvent')]
+    public function atualiza($data){
+
+        if (json_decode($data['slide']['content'])->type == 'bible'){
+            $this->dispatch('restart-animation');
+
+        }else{
+        if(json_decode($data['slide']['content'])->model == $this->slide->model){
+            $this->dispatch('restart-animation');
+        }else{
+            return redirect(request()->header('Referer'));
+        }
+    }
+    }
+
+    #[On('atualiza2')]
+    public function atualiza2(){
+            $slide = Slide::first();
+            $this->slide = json_decode($slide->content);
+            $this->text = $this->slide->text;
+            $this->end = $this->slide->end;
+            $this->config = SlideConfig::first();
+    }
+
+    #[On('echo:slide,SlideConfigEvent')]
+    public function font($data){
+        $this->font_size = $data['slideConfig']['content']['font_size'];
     }
     public function mount(){
         $slide = Slide::first();
-        //dd($slide);
         $this->slide = json_decode($slide->content);
-
+        $this->text = $this->slide->text;
+        $this->end = $this->slide->end;
         $this->config = SlideConfig::first();
-
-        //dd($this->config->content);
-        //$this->config = json_decode($this->config->content);
-
-
+        $this->font_size = $this->config->content['font_size'];
     }
 
     public function render()

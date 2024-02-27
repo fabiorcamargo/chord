@@ -32,8 +32,9 @@ class ViewSong extends ViewRecord
         //dd($infolist->record);
         return $infolist
             ->schema([
-                Livewire::make(Presentation::class)->lazy()->columnSpanFull(),
-                Livewire::make(ShowLyrics::class, ['record' => $infolist->record])->lazy()->columnSpanFull(),
+                Livewire::make(ShowLyrics::class, ['record' => $infolist->record])->lazy(),
+                Livewire::make(Presentation::class)->lazy(),
+
             ]);
     }
 }

@@ -74,6 +74,7 @@ class Verse extends Model
         $config = SlideConfig::first();
         $slide = Slide::first();
         $slide_content = json_decode($slide->content);
+        //dd($model->id);
         $content = [
             'type' => $type,
             'key' => $key,

@@ -10,6 +10,7 @@ use App\Models\ImageBank;
 use App\Models\Song;
 use App\Models\Tag;
 use App\Models\VideoBank;
+use Filament\Actions\CreateAction;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -28,6 +29,10 @@ class SongResource extends Resource
 
     protected static ?string $navigationLabel = 'Músicas';
 
+    protected static ?string $slug = "musicas";
+
+    protected static ?string $label = "Músicas";
+
     protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
@@ -43,6 +48,7 @@ class SongResource extends Resource
                     ->options(Category::all()->pluck('name', 'id'))
                     ->searchable()
                     ->preload(),
+
                 // Forms\Components\Select::make('image_id')
                 //     ->label('Imagem')
                 //     ->options(ImageBank::all()->pluck('name', 'id'))
@@ -64,7 +70,8 @@ class SongResource extends Resource
 
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nome')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('Category.name')
                     ->label('Categoria')
                     ->sortable(),
@@ -88,7 +95,8 @@ class SongResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->defaultSort('name', 'asc');;
     }
 
     public static function getRelations(): array

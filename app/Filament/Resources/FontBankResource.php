@@ -13,6 +13,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\FontProviders\GoogleFontProvider;
+use Filament\Infolists\Infolist;
 use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
 use Filament\Tables\Actions\Action;
@@ -90,12 +91,15 @@ class FontBankResource extends Resource
         ];
     }
 
+
+
     public static function getPages(): array
     {
         return [
             'index' => Pages\ListFontBanks::route('/'),
             'create' => Pages\CreateFontBank::route('/create'),
             'edit' => Pages\EditFontBank::route('/{record}/edit'),
+            'view' => Pages\ViewFontBank::route('/{record}'),
         ];
     }
 }
