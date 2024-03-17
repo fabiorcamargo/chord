@@ -114,7 +114,7 @@
 
 <div class="fixed top-0 left-0 w-full h-full flex justify-center items-center z-50">
     <div class="fixed inset-0 h-screen bg-cover bg-center" style="background-color: black;">
-        <video autoplay loop muted class="absolute inset-0 w-full h-full object-cover"
+        <video autoplay loop class="absolute inset-0 w-full h-full object-cover"
             style="object-fit: cover; object-position: center center; width: 100%; height: 100%;">
             <source src="{{asset('storage/'.$slide->video_background)}}" type="video/mp4">
             <!-- Adicione mais sources para suporte a diferentes formatos de vídeo -->

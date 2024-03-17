@@ -34,10 +34,11 @@ class VideoBankResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name'),
+                Forms\Components\TextInput::make('name')
+                ->required(),
                 FileUpload::make('path')
                     ->moveFiles()
-                    ->maxSize(20000)
+                    ->maxSize(200000)
                     ->columnSpanFull(),
             ]);
     }

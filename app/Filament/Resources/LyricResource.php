@@ -67,7 +67,6 @@ class LyricResource extends Resource
             ->columns([
 
                 Tables\Columns\TextColumn::make('image_background_id')
-
                     ->sortable(),
                 Tables\Columns\TextColumn::make('video_background_id')
 
